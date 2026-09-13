@@ -181,9 +181,9 @@ async def category_item(callback: CallbackQuery):
 @router.message(F.text == "Reviews")
 async def vidguk_msg(message: Message):
     await message.answer(
-        "⭐ You can view reviews on our Instagram page:\nhttps://www.instagram.com/your_business_handle",
+        "⭐ You can view reviews on our Instagram page:\nhttps://www.instagram.com/yustack7/",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="📸 Open Instagram", url="https://www.instagram.com/your_business_handle")],
+            [InlineKeyboardButton(text="📸 Open Instagram", url="https://www.instagram.com/yustack7/")],
             [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
         ])
     )
@@ -192,9 +192,9 @@ async def vidguk_msg(message: Message):
 @router.callback_query(F.data == "btn_reviews")
 async def vidguk_cb(callback: CallbackQuery):
     await callback.message.edit_text(
-        "⭐ You can view reviews on our Instagram page:\nhttps://www.instagram.com/your_business_handle",
+        "⭐ You can view reviews on our Instagram page:\nhttps://www.instagram.com/yustack7/",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="📸 Open Instagram", url="https://www.instagram.com/your_business_handle")],
+            [InlineKeyboardButton(text="📸 Open Instagram", url="https://www.instagram.com/yustack7/")],
             [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
         ])
     )
