@@ -16,6 +16,7 @@ import app.keyboard as kb
 import app.database.requests as rq
 import app.info as inf
 import os
+import json
 from app.middlewsres import TestMiddleware
 from app.google_sheets import append_booking, sync_all_appointments
 from aiogram.utils.keyboard import InlineKeyboardBuilder
@@ -125,6 +126,44 @@ async def to_main(callback: CallbackQuery, state: FSMContext):
         parse_mode="HTML"
     )
     await callback.answer()
+
+
+# ==================== MINI APP BRIEFS (WebApp sendData) ====================
+
+@router.message(F.web_app_data)
+async def webapp_brief(message: Message):
+    """Бриф з міні-апки YuStack (sendData) → форвард власнику."""
+    try:
+        data = json.loads(message.web_app_data.data)
+    except Exception:
+        return
+    if not isinstance(data, dict) or data.get("type") != "brief":
+        return
+
+    name = str(data.get("name") or "").strip() or str(data.get("from") or "—").strip() or "—"
+    niche = str(data.get("niche") or "—").strip() or "—"
+    pain = str(data.get("pain") or "—").strip() or "—"
+    sender = message.from_user
+    who = f"@{sender.username}" if sender.username else f"id {sender.id}"
+
+    text = (
+        "<b>Новий бриф з міні-апки</b>\n\n"
+        f"👤 Імʼя: {name}\n"
+        f"🏷 Ніша: {niche}\n"
+        f"💬 Що болить: {pain}\n"
+        f"🔗 Від: {who}"
+    )
+
+    for admin_id in ADMIN_IDS:
+        try:
+            await message.bot.send_message(chat_id=admin_id, text=text, parse_mode="HTML")
+        except Exception:
+            pass
+
+    try:
+        await message.answer("Дякую! Бриф отримано. Оцінку і наступні кроки напишу сюди.")
+    except Exception:
+        pass
 
 
 # ==================== PRICE LIST ====================
