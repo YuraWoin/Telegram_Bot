@@ -13,22 +13,9 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine, AsyncSession
 
 
-DATABASE_URL = os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv('DATABASE_URL').replace('postgresql://', 'postgresql+asyncpg://', 1).split('?')[0]
+engine = create_async_engine(DATABASE_URL, connect_args={'ssl': 'require'}, pool_pre_ping=True)
 
-if not DATABASE_URL:
-    if os.getenv('RENDER'):
-        raise RuntimeError('DATABASE_URL не заданий у продакшн-середовищі (Render)!')
-    DATABASE_URL = 'sqlite+aiosqlite:///db.sqlite3'
-    print('⚠️  DATABASE_URL не знайдено — використовується локальний SQLite')
-else:
-    # Render видає postgresql://, а SQLAlchemy async потребує +asyncpg
-    if DATABASE_URL.startswith('postgresql://'):
-        DATABASE_URL = DATABASE_URL.replace('postgresql://', 'postgresql+asyncpg://', 1)
-    db_url_masked = DATABASE_URL.split('@')[-1] if '@' in DATABASE_URL else DATABASE_URL
-    print(f'🗄️  models.py підключається до: {db_url_masked}')
-
-engine = create_async_engine(DATABASE_URL, echo=False)
-async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 class Base(AsyncAttrs, DeclarativeBase):
     pass
