@@ -14,8 +14,9 @@ from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_
 
 
 DATABASE_URL = os.getenv('DATABASE_URL').replace('postgresql://', 'postgresql+asyncpg://', 1).split('?')[0]
-engine = create_async_engine(DATABASE_URL, connect_args={'ssl': 'require'}, pool_pre_ping=True)
 
+engine = create_async_engine(DATABASE_URL, connect_args={'ssl': 'require'}, pool_pre_ping=True)
+async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 class Base(AsyncAttrs, DeclarativeBase):
     pass
