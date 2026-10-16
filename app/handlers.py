@@ -112,6 +112,8 @@ async def cmd_start(message: Message):
     await rq.set_user(message.from_user.id)
     await message.answer(
         f"Welcome, {message.from_user.first_name}!\n\n" + START_TEXT,
+        sticker_file_id = ('sticker.webp')
+        await message.answer_sticker(sticker=sticker_file_id),
         reply_markup=kb.main_inline(),
         parse_mode="HTML"
     )
@@ -631,7 +633,7 @@ async def cafe_menu_cb(callback: CallbackQuery):
 async def _show_cafe_menu(event):
     root_cats = await rq.get_root_categories()
     food_cat = next((c for c in root_cats if c.name == "Food Menu"), None)
-    
+
     if food_cat:
         subs = list(await rq.get_subcategories(food_cat.id))
     else:
