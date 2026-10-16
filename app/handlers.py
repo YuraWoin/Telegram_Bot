@@ -110,10 +110,12 @@ START_TEXT = (
 @router.message(CommandStart())
 async def cmd_start(message: Message):
     await rq.set_user(message.from_user.id)
+    sticker_file_id = ('sticker.webp'),
+    await message.answer_sticker(
+        sticker=sticker_file_id
+    )
     await message.answer(
         f"Welcome, {message.from_user.first_name}!\n\n" + START_TEXT,
-        sticker_file_id = ('sticker.webp')
-        await message.answer_sticker(sticker=sticker_file_id),
         reply_markup=kb.main_inline(),
         parse_mode="HTML"
     )
