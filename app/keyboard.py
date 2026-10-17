@@ -17,19 +17,19 @@ import app.database.requests as rq
 def main_inline():
     return InlineKeyboardMarkup(inline_keyboard=[
         [
-            InlineKeyboardButton(text="💳 Price List", callback_data="btn_price_list"),
-            InlineKeyboardButton(text="📅 Booking", callback_data="btn_booking")
+            InlineKeyboardButton(text="💳 Прайс-лист", callback_data="btn_price_list"),
+            InlineKeyboardButton(text="📅 Запис", callback_data="btn_booking")
         ],
         [
-            InlineKeyboardButton(text="🔧 STO Booking", callback_data="btn_sto_booking"),
-            InlineKeyboardButton(text="🍽 Order Food", callback_data="btn_order_food")
+            InlineKeyboardButton(text="🔧 Запис СТО", callback_data="btn_sto_booking"),
+            InlineKeyboardButton(text="🍽 Замовити їжу", callback_data="btn_order_food")
         ],
         [
-            InlineKeyboardButton(text="🛒 Shop", callback_data="btn_shop")
+            InlineKeyboardButton(text="🛒 Магазин", callback_data="btn_shop")
         ],
         [
-            InlineKeyboardButton(text="⭐ Reviews", callback_data="btn_reviews"),
-            InlineKeyboardButton(text="ℹ️ About", callback_data="btn_about")
+            InlineKeyboardButton(text="⭐ Відгуки", callback_data="btn_reviews"),
+            InlineKeyboardButton(text="ℹ️ Про нас", callback_data="btn_about")
         ]
     ])
 
@@ -37,10 +37,10 @@ def main_inline():
 # Для зворотної сумісності (якщо десь потрібна нижня клава)
 rpbt = ReplyKeyboardMarkup(
     keyboard=[
-        [KeyboardButton(text="Price List"), KeyboardButton(text="Booking")],
-        [KeyboardButton(text="STO Booking"), KeyboardButton(text="Order Food")],
-        [KeyboardButton(text="Shop")],
-        [KeyboardButton(text="Reviews"), KeyboardButton(text="About")],
+        [KeyboardButton(text="Прайс-лист"), KeyboardButton(text="Запис")],
+        [KeyboardButton(text="Запис СТО"), KeyboardButton(text="Замовити їжу")],
+        [KeyboardButton(text="Магазин")],
+        [KeyboardButton(text="Відгуки"), KeyboardButton(text="Про нас")],
     ],
     resize_keyboard=True
 )
@@ -54,7 +54,7 @@ async def categories():
     if cats:
         for cat in cats:
             keyboard.add(InlineKeyboardButton(text=cat.name, callback_data=f"category_{cat.id}"))
-    keyboard.add(InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main"))
+    keyboard.add(InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main"))
     return keyboard.adjust(2).as_markup()
 
 
@@ -64,8 +64,8 @@ async def subcategories(cat_id: int):
     if subs:
         for sub in subs:
             keyboard.add(InlineKeyboardButton(text=sub.name, callback_data=f"category_{sub.id}"))
-    keyboard.add(InlineKeyboardButton(text="◀️ Back", callback_data="back_to_categories"))
-    keyboard.add(InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main"))
+    keyboard.add(InlineKeyboardButton(text="◀️ Назад", callback_data="back_to_categories"))
+    keyboard.add(InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main"))
     return keyboard.adjust(2).as_markup()
 
 
@@ -75,8 +75,8 @@ async def item(cat_id: int):
     if items:
         for item_obj in items:
             keyboard.add(InlineKeyboardButton(text=f"{item_obj.name} — {item_obj.price}", callback_data=f"item_{item_obj.id}"))
-    keyboard.add(InlineKeyboardButton(text="◀️ Back", callback_data="to_categories"))
-    keyboard.add(InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main"))
+    keyboard.add(InlineKeyboardButton(text="◀️ Назад", callback_data="to_categories"))
+    keyboard.add(InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main"))
     return keyboard.adjust(1).as_markup()
 
 
@@ -88,7 +88,7 @@ def dates_keyboard():
         date_str = date_obj.strftime("%Y-%m-%d")
         display = date_obj.strftime("%d.%m.%Y")
         keyboard.add(InlineKeyboardButton(text=display, callback_data=f"book_date_{date_str}"))
-    keyboard.add(InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking"))
+    keyboard.add(InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking"))
     return keyboard.adjust(1).as_markup()
 
 
@@ -100,6 +100,6 @@ async def times_keyboard(date: str):
     keyboard = InlineKeyboardBuilder()
     for t in times:
         keyboard.add(InlineKeyboardButton(text=t, callback_data=f"book_time_{t}"))
-    keyboard.add(InlineKeyboardButton(text="◀️ Back", callback_data="book_date_back"))
-    keyboard.add(InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking"))
+    keyboard.add(InlineKeyboardButton(text="◀️ Назад", callback_data="book_date_back"))
+    keyboard.add(InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking"))
     return keyboard.adjust(3).as_markup()

@@ -46,9 +46,9 @@ async def set_user(tg_id):
             if not user:
                 sesion.add(User(tg_id=tg_id))
                 await sesion.commit()
-                print('operation to bd')
+                print('операція до БД')
         except Exception as e:
-            print('ERROR', e)
+            print('ПОМИЛКА', e)
 
 
 async def get_categories():

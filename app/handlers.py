@@ -73,16 +73,16 @@ class STOReg(StatesGroup):
 # ==================== MASTERS ====================
 
 MASTER_CATEGORIES = {
-    "Galyna": ["Hair", "Nails", "Makeup", "Brows"],
-    "Natala": ["Hair", "Nails", "Makeup", "Brows"],
-    "Tanya": ["Hair", "Nails", "Makeup", "Brows"],
-    "Andriana": ["Makeup", "Brows"],
+    "Galyna": ["Волосся", "Нігті", "Макіяж", "Брови"],
+    "Natala": ["Волосся", "Нігті", "Макіяж", "Брови"],
+    "Tanya": ["Волосся", "Нігті", "Макіяж", "Брови"],
+    "Andriana": ["Макіяж", "Брови"],
 }
 
 MASTERS_CATEGORIES = {
-    "Oleksiy": ["Diagnostics", "Oil Change", "Engine Repair", "Suspension", "Tires", "Electrics"],
-    "Dmytro": ["Diagnostics", "Oil Change", "Engine Repair", "Suspension", "Tires", "Electrics"],
-    "Serhiy": ["Diagnostics", "Oil Change", "Engine Repair", "Electrics"],
+    "Oleksiy": ["Діагностика", "Заміна оливи", "Ремонт двигуна", "Підвіска", "Шини", "Електрика"],
+    "Dmytro": ["Діагностика", "Заміна оливи", "Ремонт двигуна", "Підвіска", "Шини", "Електрика"],
+    "Serhiy": ["Діагностика", "Заміна оливи", "Ремонт двигуна", "Електрика"],
 }
 
 STO_MASTERS = MASTERS_CATEGORIES
@@ -96,14 +96,14 @@ user_carts = {}
 # ==================== START & MAIN MENU ====================
 
 START_TEXT = (
-    "Welcome to our business chat-bot! 🌸\n\n"
-    "Here you can book appointments, order food, shop online, and view our price list.\n\n"
-    "💳 <b>Price List:</b> View service costs.\n"
-    "📅 <b>Booking:</b> Salon appointments.\n"
-    "🔧 <b>STO Booking:</b> Car service appointments.\n"
-    "🍽 <b>Order Food:</b> Cafe menu.\n"
-    "🛒 <b>Shop:</b> Browse products and cart.\n\n"
-    "Select an option below:"
+    "Вітаємо у нашому бізнес-чат-боті! 🌸\n\n"
+    "Тут ви можете записатися на прийом, замовити їжу, обрати товари онлайн і переглянути прайс-лист.\n\n"
+    "💳 <b>Прайс-лист:</b> Переглянути вартість послуг.\n"
+    "📅 <b>Запис:</b> Запис у салон.\n"
+    "🔧 <b>Запис СТО:</b> Запис на автосервіс.\n"
+    "🍽 <b>Замовити їжу:</b> Меню кафе.\n"
+    "🛒 <b>Магазин:</b> Перегляд товарів і кошик.\n\n"
+    "Оберіть опцію нижче:"
 )
 
 
@@ -115,7 +115,7 @@ async def cmd_start(message: Message):
         sticker=sticker_file_id
     )
     await message.answer(
-        f"Welcome, {message.from_user.first_name}!\n\n" + START_TEXT,
+        f"Вітаємо, {message.from_user.first_name}!\n\n" + START_TEXT,
         reply_markup=kb.main_inline(),
         parse_mode="HTML"
     )
@@ -125,7 +125,7 @@ async def cmd_start(message: Message):
 async def to_main(callback: CallbackQuery, state: FSMContext):
     await state.clear()
     await callback.message.edit_text(
-        f"Welcome, {callback.from_user.first_name}!\n\n" + START_TEXT,
+        f"Вітаємо, {callback.from_user.first_name}!\n\n" + START_TEXT,
         reply_markup=kb.main_inline(),
         parse_mode="HTML"
     )
@@ -172,14 +172,14 @@ async def webapp_brief(message: Message):
 
 # ==================== PRICE LIST ====================
 
-@router.message(F.text == "Price List")
+@router.message(F.text == "Прайс-лист")
 async def catalog_msg(message: Message):
-    await message.answer("Select a category:", reply_markup=await kb.categories())
+    await message.answer("Оберіть категорію:", reply_markup=await kb.categories())
 
 
 @router.callback_query(F.data == "btn_price_list")
 async def catalog_cb(callback: CallbackQuery):
-    await callback.message.edit_text("Select a category:", reply_markup=await kb.categories())
+    await callback.message.edit_text("Оберіть категорію:", reply_markup=await kb.categories())
     await callback.answer()
 
 
@@ -188,21 +188,21 @@ async def category(callback: CallbackQuery):
     cat_id = int(callback.data.split("_")[1])
     subs = list(await rq.get_subcategories(cat_id))
     if subs:
-        await callback.message.edit_text("Select a subcategory:", reply_markup=await kb.subcategories(cat_id))
+        await callback.message.edit_text("Оберіть підкатегорію:", reply_markup=await kb.subcategories(cat_id))
     else:
-        await callback.message.edit_text("Select a service to view details:", reply_markup=await kb.item(cat_id))
+        await callback.message.edit_text("Оберіть послугу для перегляду деталей:", reply_markup=await kb.item(cat_id))
     await callback.answer()
 
 
 @router.callback_query(F.data == "to_categories")
 async def to_categories(callback: CallbackQuery):
-    await callback.message.edit_text("Select a category:", reply_markup=await kb.categories())
+    await callback.message.edit_text("Оберіть категорію:", reply_markup=await kb.categories())
     await callback.answer()
 
 
 @router.callback_query(F.data == "back_to_categories")
 async def back_to_categories(callback: CallbackQuery):
-    await callback.message.edit_text("Select a category:", reply_markup=await kb.categories())
+    await callback.message.edit_text("Оберіть категорію:", reply_markup=await kb.categories())
     await callback.answer()
 
 
@@ -210,10 +210,10 @@ async def back_to_categories(callback: CallbackQuery):
 async def category_item(callback: CallbackQuery):
     item_data = await rq.get_item(int(callback.data.split("_")[1]))
     await callback.message.edit_text(
-        f"🔹 {item_data.name}\n📝 {item_data.description}\n💰 Price: {item_data.price}",
+        f"🔹 {item_data.name}\n📝 {item_data.description}\n💰 Ціна: {item_data.price}",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="◀️ Back", callback_data=f"category_{item_data.category}")],
-            [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+            [InlineKeyboardButton(text="◀️ Назад", callback_data=f"category_{item_data.category}")],
+            [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
         ])
     )
     await callback.answer()
@@ -221,13 +221,13 @@ async def category_item(callback: CallbackQuery):
 
 # ==================== INFO / REVIEWS ====================
 
-@router.message(F.text == "Reviews")
+@router.message(F.text == "Відгуки")
 async def vidguk_msg(message: Message):
     await message.answer(
-        "⭐ You can view reviews on our Instagram page:\nhttps://www.instagram.com/yustack7/",
+        "⭐ Ви можете переглянути відгуки на нашій сторінці в Instagram:\nhttps://www.instagram.com/yustack7/",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="📸 Open Instagram", url="https://www.instagram.com/yustack7/")],
-            [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+            [InlineKeyboardButton(text="📸 Відкрити Instagram", url="https://www.instagram.com/yustack7/")],
+            [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
         ])
     )
 
@@ -235,21 +235,21 @@ async def vidguk_msg(message: Message):
 @router.callback_query(F.data == "btn_reviews")
 async def vidguk_cb(callback: CallbackQuery):
     await callback.message.edit_text(
-        "⭐ You can view reviews on our Instagram page:\nhttps://www.instagram.com/yustack7/",
+        "⭐ Ви можете переглянути відгуки на нашій сторінці в Instagram:\nhttps://www.instagram.com/yustack7/",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="📸 Open Instagram", url="https://www.instagram.com/yustack7/")],
-            [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+            [InlineKeyboardButton(text="📸 Відкрити Instagram", url="https://www.instagram.com/yustack7/")],
+            [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
         ])
     )
     await callback.answer()
 
 
-@router.message(F.text == "About")
+@router.message(F.text == "Про нас")
 async def info_msg(message: Message):
     await message.answer(
         inf.infofo,
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+            [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
         ])
     )
 
@@ -259,7 +259,7 @@ async def info_cb(callback: CallbackQuery):
     await callback.message.edit_text(
         inf.infofo,
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+            [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
         ])
     )
     await callback.answer()
@@ -267,7 +267,7 @@ async def info_cb(callback: CallbackQuery):
 
 # ==================== BEAUTY / BARBERSHOP BOOKING ====================
 
-@router.message(F.text == "Booking")
+@router.message(F.text == "Запис")
 async def zapus_msg(message: Message, state: FSMContext):
     await rq.set_user(message.from_user.id)
     await state.set_state(Reg.master)
@@ -275,8 +275,8 @@ async def zapus_msg(message: Message, state: FSMContext):
     keyboard_rows = []
     for master_key in MASTER_CATEGORIES.keys():
         keyboard_rows.append([InlineKeyboardButton(text=f"✂️ {master_key}", callback_data=f"master_{master_key}")])
-    keyboard_rows.append([InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking")])
-    await message.answer("Choose a master:", reply_markup=InlineKeyboardMarkup(inline_keyboard=keyboard_rows))
+    keyboard_rows.append([InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking")])
+    await message.answer("Оберіть майстра:", reply_markup=InlineKeyboardMarkup(inline_keyboard=keyboard_rows))
 
 
 @router.callback_query(F.data == "btn_booking")
@@ -287,15 +287,15 @@ async def zapus_cb(callback: CallbackQuery, state: FSMContext):
     keyboard_rows = []
     for master_key in MASTER_CATEGORIES.keys():
         keyboard_rows.append([InlineKeyboardButton(text=f"✂️ {master_key}", callback_data=f"master_{master_key}")])
-    keyboard_rows.append([InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking")])
-    await callback.message.edit_text("Choose a master:", reply_markup=InlineKeyboardMarkup(inline_keyboard=keyboard_rows))
+    keyboard_rows.append([InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking")])
+    await callback.message.edit_text("Оберіть майстра:", reply_markup=InlineKeyboardMarkup(inline_keyboard=keyboard_rows))
     await callback.answer()
 
 
 @router.callback_query(F.data.startswith("master_"), Reg.master)
 async def choose_master(callback: CallbackQuery, state: FSMContext):
     master_key = callback.data.replace("master_", "")
-    await state.update_data(master=f"Master {master_key}")
+    await state.update_data(master=f"Майстер {master_key}")
     await state.set_state(Reg.service)
 
     allowed = MASTER_CATEGORIES.get(master_key, [])
@@ -304,8 +304,8 @@ async def choose_master(callback: CallbackQuery, state: FSMContext):
     for cat in cats:
         if cat.name in allowed:
             keyboard.add(InlineKeyboardButton(text=cat.name, callback_data=f"book_cat_{cat.id}"))
-    keyboard.add(InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking"))
-    await callback.message.edit_text("Select a service category:", reply_markup=keyboard.adjust(1).as_markup())
+    keyboard.add(InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking"))
+    await callback.message.edit_text("Оберіть категорію послуг:", reply_markup=keyboard.adjust(1).as_markup())
 
 
 @router.callback_query(F.data.startswith("book_cat_"), Reg.service)
@@ -315,8 +315,8 @@ async def choose_service_category(callback: CallbackQuery, state: FSMContext):
     keyboard = InlineKeyboardBuilder()
     for item_obj in items:
         keyboard.add(InlineKeyboardButton(text=f"{item_obj.name} — {item_obj.price}", callback_data=f"book_service_{item_obj.id}_{item_obj.name}"))
-    keyboard.add(InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking"))
-    await callback.message.edit_text("Select a service:", reply_markup=keyboard.adjust(1).as_markup())
+    keyboard.add(InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking"))
+    await callback.message.edit_text("Оберіть послугу:", reply_markup=keyboard.adjust(1).as_markup())
 
 
 @router.callback_query(F.data.startswith("book_service_"), Reg.service)
@@ -325,7 +325,7 @@ async def choose_service(callback: CallbackQuery, state: FSMContext):
     service_name = parts[3] if len(parts) > 3 else parts[2]
     await state.update_data(service=service_name)
     await state.set_state(Reg.date)
-    await callback.message.edit_text("Select a date:", reply_markup=kb.dates_keyboard())
+    await callback.message.edit_text("Оберіть дату:", reply_markup=kb.dates_keyboard())
 
 
 @router.callback_query(F.data.startswith("book_date_"), Reg.date)
@@ -333,13 +333,13 @@ async def choose_date(callback: CallbackQuery, state: FSMContext):
     date = callback.data.split("_", 2)[2]
     await state.update_data(date=date)
     await state.set_state(Reg.time)
-    await callback.message.edit_text("Select a time:", reply_markup=await kb.times_keyboard(date))
+    await callback.message.edit_text("Оберіть час:", reply_markup=await kb.times_keyboard(date))
 
 
 @router.callback_query(F.data == "book_date_back", Reg.time)
 async def back_to_date(callback: CallbackQuery, state: FSMContext):
     await state.set_state(Reg.date)
-    await callback.message.edit_text("Select a date:", reply_markup=kb.dates_keyboard())
+    await callback.message.edit_text("Оберіть дату:", reply_markup=kb.dates_keyboard())
 
 
 @router.callback_query(F.data.startswith("book_time_"), Reg.time)
@@ -349,9 +349,9 @@ async def choose_time(callback: CallbackQuery, state: FSMContext):
     await state.set_state(Reg.name)
     await callback.message.delete()
     await callback.message.answer(
-        "Enter your first and last name:",
+        "Введіть ваше ім'я та прізвище:",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking")]
+            [InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking")]
         ])
     )
 
@@ -361,9 +361,9 @@ async def zapus_name(message: Message, state: FSMContext):
     await state.update_data(name=message.text)
     await state.set_state(Reg.number)
     await message.answer(
-        "Enter your phone number or press the button below:",
+        "Введіть ваш номер телефону або натисніть кнопку нижче:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="📱 Share phone number", request_contact=True)]],
+            keyboard=[[KeyboardButton(text="📱 Поділитися номером телефону", request_contact=True)]],
             resize_keyboard=True,
             one_time_keyboard=True
         )
@@ -411,15 +411,15 @@ async def _finish_beauty_booking(message: Message, state: FSMContext, number: st
         print(f"[Google Sheets Error] {e}")
 
     await message.answer(
-        "✅ You have successfully booked!\n\n"
+        "✅ Ви успішно записані!\n\n"
         f"👤 {data['name']}\n"
         f"📱 {data['number']}\n"
         f"💇 {data['master']}\n"
         f"✂️ {data['service']}\n"
-        f"📅 {data['date']} at {data['time']}\n\n"
-        "Thank you for booking! 🌸",
+        f"📅 {data['date']} о {data['time']}\n\n"
+        "Дякуємо за запис! 🌸",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+            [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
         ])
     )
 
@@ -427,12 +427,12 @@ async def _finish_beauty_booking(message: Message, state: FSMContext, number: st
         try:
             await message.bot.send_message(
                 chat_id=admin_id,
-                text=f"🔔 New booking!\n\n"
+                text=f"🔔 Новий запис!\n\n"
                      f"👤 {data['name']}\n"
                      f"📱 {data['number']}\n"
                      f"💇 {data['master']}\n"
                      f"✂️ {data['service']}\n"
-                     f"📅 {data['date']} at {data['time']}"
+                     f"📅 {data['date']} о {data['time']}"
             )
         except Exception:
             pass
@@ -441,14 +441,14 @@ async def _finish_beauty_booking(message: Message, state: FSMContext, number: st
 @router.callback_query(F.data == "cancel_booking")
 async def cancel_booking(callback: CallbackQuery, state: FSMContext):
     await state.clear()
-    await callback.message.edit_text("❌ Booking cancelled", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+    await callback.message.edit_text("❌ Запис скасовано", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
     ]))
 
 
 # ==================== STO BOOKING ====================
 
-@router.message(F.text == "STO Booking")
+@router.message(F.text == "Запис СТО")
 async def sto_start_msg(message: Message, state: FSMContext):
     await rq.set_user(message.from_user.id)
     await state.set_state(STOReg.master)
@@ -456,8 +456,8 @@ async def sto_start_msg(message: Message, state: FSMContext):
     keyboard_rows = []
     for master_key in STO_MASTERS.keys():
         keyboard_rows.append([InlineKeyboardButton(text=f"🔧 {master_key}", callback_data=f"sto_master_{master_key}")])
-    keyboard_rows.append([InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking")])
-    await message.answer("Choose a mechanic:", reply_markup=InlineKeyboardMarkup(inline_keyboard=keyboard_rows))
+    keyboard_rows.append([InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking")])
+    await message.answer("Оберіть механіка:", reply_markup=InlineKeyboardMarkup(inline_keyboard=keyboard_rows))
 
 
 @router.callback_query(F.data == "btn_sto_booking")
@@ -468,15 +468,15 @@ async def sto_start_cb(callback: CallbackQuery, state: FSMContext):
     keyboard_rows = []
     for master_key in STO_MASTERS.keys():
         keyboard_rows.append([InlineKeyboardButton(text=f"🔧 {master_key}", callback_data=f"sto_master_{master_key}")])
-    keyboard_rows.append([InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking")])
-    await callback.message.edit_text("Choose a mechanic:", reply_markup=InlineKeyboardMarkup(inline_keyboard=keyboard_rows))
+    keyboard_rows.append([InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking")])
+    await callback.message.edit_text("Оберіть механіка:", reply_markup=InlineKeyboardMarkup(inline_keyboard=keyboard_rows))
     await callback.answer()
 
 
 @router.callback_query(F.data.startswith("sto_master_"), STOReg.master)
 async def sto_choose_master(callback: CallbackQuery, state: FSMContext):
     master_key = callback.data.replace("sto_master_", "")
-    await state.update_data(master=f"Mechanic {master_key}")
+    await state.update_data(master=f"Механік {master_key}")
     await state.set_state(STOReg.service)
 
     allowed = STO_MASTERS.get(master_key, [])
@@ -485,8 +485,8 @@ async def sto_choose_master(callback: CallbackQuery, state: FSMContext):
     for cat in cats:
         if cat.name in allowed:
             keyboard.add(InlineKeyboardButton(text=cat.name, callback_data=f"sto_cat_{cat.id}"))
-    keyboard.add(InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking"))
-    await callback.message.edit_text("Select service category:", reply_markup=keyboard.adjust(1).as_markup())
+    keyboard.add(InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking"))
+    await callback.message.edit_text("Оберіть категорію послуг:", reply_markup=keyboard.adjust(1).as_markup())
 
 
 @router.callback_query(F.data.startswith("sto_cat_"), STOReg.service)
@@ -496,8 +496,8 @@ async def sto_choose_service(callback: CallbackQuery, state: FSMContext):
     keyboard = InlineKeyboardBuilder()
     for item_obj in items:
         keyboard.add(InlineKeyboardButton(text=f"{item_obj.name} — {item_obj.price}", callback_data=f"sto_service_{item_obj.id}_{item_obj.name}"))
-    keyboard.add(InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking"))
-    await callback.message.edit_text("Select service:", reply_markup=keyboard.adjust(1).as_markup())
+    keyboard.add(InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking"))
+    await callback.message.edit_text("Оберіть послугу:", reply_markup=keyboard.adjust(1).as_markup())
 
 
 @router.callback_query(F.data.startswith("sto_service_"), STOReg.service)
@@ -506,7 +506,7 @@ async def sto_service_selected(callback: CallbackQuery, state: FSMContext):
     service_name = parts[3] if len(parts) > 3 else parts[2]
     await state.update_data(service=service_name)
     await state.set_state(STOReg.date)
-    await callback.message.edit_text("Select date:", reply_markup=kb.dates_keyboard())
+    await callback.message.edit_text("Оберіть дату:", reply_markup=kb.dates_keyboard())
 
 
 @router.callback_query(F.data.startswith("book_date_"), STOReg.date)
@@ -514,13 +514,13 @@ async def sto_choose_date(callback: CallbackQuery, state: FSMContext):
     date = callback.data.split("_", 2)[2]
     await state.update_data(date=date)
     await state.set_state(STOReg.time)
-    await callback.message.edit_text("Select time:", reply_markup=await kb.times_keyboard(date))
+    await callback.message.edit_text("Оберіть час:", reply_markup=await kb.times_keyboard(date))
 
 
 @router.callback_query(F.data == "book_date_back", STOReg.time)
 async def sto_back_to_date(callback: CallbackQuery, state: FSMContext):
     await state.set_state(STOReg.date)
-    await callback.message.edit_text("Select date:", reply_markup=kb.dates_keyboard())
+    await callback.message.edit_text("Оберіть дату:", reply_markup=kb.dates_keyboard())
 
 
 @router.callback_query(F.data.startswith("book_time_"), STOReg.time)
@@ -530,9 +530,9 @@ async def sto_choose_time(callback: CallbackQuery, state: FSMContext):
     await state.set_state(STOReg.name)
     await callback.message.delete()
     await callback.message.answer(
-        "Enter your name:",
+        "Введіть ваше ім'я:",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking")]
+            [InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking")]
         ])
     )
 
@@ -542,9 +542,9 @@ async def sto_name(message: Message, state: FSMContext):
     await state.update_data(name=message.text)
     await state.set_state(STOReg.number)
     await message.answer(
-        "Enter your phone number or press the button below:",
+        "Введіть ваш номер телефону або натисніть кнопку нижче:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="📱 Share phone number", request_contact=True)]],
+            keyboard=[[KeyboardButton(text="📱 Поділитися номером телефону", request_contact=True)]],
             resize_keyboard=True,
             one_time_keyboard=True
         )
@@ -592,15 +592,15 @@ async def _finish_sto_booking(message: Message, state: FSMContext, number: str):
         print(f"[Google Sheets Error] {e}")
 
     await message.answer(
-        "✅ STO booking confirmed!\n\n"
+        "✅ Запис на СТО підтверджено!\n\n"
         f"👤 {data['name']}\n"
         f"📱 {data['number']}\n"
         f"🔧 {data['master']}\n"
         f"⚙️ {data['service']}\n"
-        f"📅 {data['date']} at {data['time']}\n\n"
-        "See you at the service station! 🚗",
+        f"📅 {data['date']} о {data['time']}\n\n"
+        "Чекаємо на вас на СТО! 🚗",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+            [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
         ])
     )
 
@@ -608,12 +608,12 @@ async def _finish_sto_booking(message: Message, state: FSMContext, number: str):
         try:
             await message.bot.send_message(
                 chat_id=admin_id,
-                text=f"🔧 New STO booking!\n\n"
+                text=f"🔧 Новий запис на СТО!\n\n"
                      f"👤 {data['name']}\n"
                      f"📱 {data['number']}\n"
                      f"🔧 {data['master']}\n"
                      f"⚙️ {data['service']}\n"
-                     f"📅 {data['date']} at {data['time']}"
+                     f"📅 {data['date']} о {data['time']}"
             )
         except Exception:
             pass
@@ -621,7 +621,7 @@ async def _finish_sto_booking(message: Message, state: FSMContext, number: str):
 
 # ==================== CAFE ORDER ====================
 
-@router.message(F.text == "Order Food")
+@router.message(F.text == "Замовити їжу")
 async def cafe_menu_msg(message: Message):
     await _show_cafe_menu(message)
 
@@ -634,20 +634,20 @@ async def cafe_menu_cb(callback: CallbackQuery):
 
 async def _show_cafe_menu(event):
     root_cats = await rq.get_root_categories()
-    food_cat = next((c for c in root_cats if c.name == "Food Menu"), None)
+    food_cat = next((c for c in root_cats if c.name == "Меню їжі"), None)
 
     if food_cat:
         subs = list(await rq.get_subcategories(food_cat.id))
     else:
         all_cats = await rq.get_all_categories()
-        subs = [c for c in all_cats if c.name in ["Breakfast", "Lunch", "Dinner", "Drinks", "Desserts"]]
+        subs = [c for c in all_cats if c.name in ["Сніданки", "Обіди", "Вечері", "Напої", "Десерти"]]
 
     keyboard = InlineKeyboardBuilder()
     for cat in subs:
         keyboard.add(InlineKeyboardButton(text=cat.name, callback_data=f"cafe_cat_{cat.id}"))
-    keyboard.add(InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main"))
+    keyboard.add(InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main"))
 
-    text = "Select a food category:"
+    text = "Оберіть категорію їжі:"
     if isinstance(event, CallbackQuery):
         await event.message.edit_text(text, reply_markup=keyboard.adjust(2).as_markup())
     else:
@@ -662,17 +662,17 @@ async def cafe_category(callback: CallbackQuery, state: FSMContext):
         keyboard = InlineKeyboardBuilder()
         for sub in subs:
             keyboard.add(InlineKeyboardButton(text=sub.name, callback_data=f"cafe_cat_{sub.id}"))
-        keyboard.add(InlineKeyboardButton(text="◀️ Back", callback_data="cafe_back"))
-        keyboard.add(InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main"))
-        await callback.message.edit_text("Select a subcategory:", reply_markup=keyboard.adjust(2).as_markup())
+        keyboard.add(InlineKeyboardButton(text="◀️ Назад", callback_data="cafe_back"))
+        keyboard.add(InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main"))
+        await callback.message.edit_text("Оберіть підкатегорію:", reply_markup=keyboard.adjust(2).as_markup())
     else:
         items = list(await rq.get_categories_item(cat_id))
         keyboard = InlineKeyboardBuilder()
         for item_obj in items:
             keyboard.add(InlineKeyboardButton(text=f"{item_obj.name} — {item_obj.price}", callback_data=f"cafe_item_{item_obj.id}_{item_obj.name}"))
-        keyboard.add(InlineKeyboardButton(text="◀️ Back", callback_data="cafe_back"))
-        keyboard.add(InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main"))
-        await callback.message.edit_text("Select a dish:", reply_markup=keyboard.adjust(1).as_markup())
+        keyboard.add(InlineKeyboardButton(text="◀️ Назад", callback_data="cafe_back"))
+        keyboard.add(InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main"))
+        await callback.message.edit_text("Оберіть страву:", reply_markup=keyboard.adjust(1).as_markup())
     await callback.answer()
 
 
@@ -687,8 +687,8 @@ async def cafe_choose_item(callback: CallbackQuery, state: FSMContext):
     item_name = parts[3] if len(parts) > 3 else parts[2]
     await state.update_data(cafe_order=item_name)
     await state.set_state(CafeStates.cafe_name)
-    await callback.message.answer("Enter your name:", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking")]
+    await callback.message.answer("Введіть ваше ім'я:", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking")]
     ]))
 
 
@@ -697,9 +697,9 @@ async def cafe_name(message: Message, state: FSMContext):
     await state.update_data(name=message.text)
     await state.set_state(CafeStates.cafe_phone)
     await message.answer(
-        "Enter your phone number or press the button below:",
+        "Введіть ваш номер телефону або натисніть кнопку нижче:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="📱 Share phone number", request_contact=True)]],
+            keyboard=[[KeyboardButton(text="📱 Поділитися номером телефону", request_contact=True)]],
             resize_keyboard=True,
             one_time_keyboard=True
         )
@@ -725,17 +725,17 @@ async def _cafe_finish(message: Message, state: FSMContext, phone: str):
         username=message.from_user.username,
         name=data['name'],
         phone=phone,
-        master="Cafe",
+        master="Кафе",
         service=data['cafe_order'],
-        date="N/A",
-        time="N/A"
+        date="Н/Д",
+        time="Н/Д"
     )
 
     for admin_id in ADMIN_IDS:
         try:
             await message.bot.send_message(
                 chat_id=admin_id,
-                text=f"🍽 New cafe order!\n\n"
+                text=f"🍽 Нове замовлення з кафе!\n\n"
                      f"👤 {data['name']}\n"
                      f"📱 {phone}\n"
                      f"🍕 {data['cafe_order']}"
@@ -744,20 +744,20 @@ async def _cafe_finish(message: Message, state: FSMContext, phone: str):
             pass
 
     await message.answer(
-        "✅ Order placed!\n\n"
+        "✅ Замовлення оформлено!\n\n"
         f"👤 {data['name']}\n"
         f"📱 {phone}\n"
         f"🍕 {data['cafe_order']}\n\n"
-        "Thank you! Your order is being prepared. 🍽",
+        "Дякуємо! Ваше замовлення готується. 🍽",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+            [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
         ])
     )
 
 
 # ==================== SHOP / CART ====================
 
-@router.message(F.text == "Shop")
+@router.message(F.text == "Магазин")
 async def shop_catalog_msg(message: Message):
     await _show_shop_catalog(message)
 
@@ -770,21 +770,21 @@ async def shop_catalog_cb(callback: CallbackQuery):
 
 async def _show_shop_catalog(event):
     root_cats = await rq.get_root_categories()
-    shop_cat = next((c for c in root_cats if c.name == "Shop Products"), None)
+    shop_cat = next((c for c in root_cats if c.name == "Товари магазину"), None)
 
     if shop_cat:
         subs = list(await rq.get_subcategories(shop_cat.id))
     else:
         all_cats = await rq.get_all_categories()
-        subs = [c for c in all_cats if c.name in ["Electronics", "Clothing", "Home & Garden", "Sports"]]
+        subs = [c for c in all_cats if c.name in ["Електроніка", "Одяг", "Дім і сад", "Спорт"]]
 
     keyboard = InlineKeyboardBuilder()
     for cat in subs:
         keyboard.add(InlineKeyboardButton(text=cat.name, callback_data=f"shop_cat_{cat.id}"))
-    keyboard.add(InlineKeyboardButton(text="🛒 View Cart", callback_data="view_cart"))
-    keyboard.add(InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main"))
+    keyboard.add(InlineKeyboardButton(text="🛒 Кошик", callback_data="view_cart"))
+    keyboard.add(InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main"))
 
-    text = "Select a product category:"
+    text = "Оберіть категорію товарів:"
     if isinstance(event, CallbackQuery):
         await event.message.edit_text(text, reply_markup=keyboard.adjust(2).as_markup())
     else:
@@ -799,17 +799,17 @@ async def shop_category(callback: CallbackQuery):
         keyboard = InlineKeyboardBuilder()
         for sub in subs:
             keyboard.add(InlineKeyboardButton(text=sub.name, callback_data=f"shop_cat_{sub.id}"))
-        keyboard.add(InlineKeyboardButton(text="◀️ Back", callback_data="shop_back"))
-        keyboard.add(InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main"))
-        await callback.message.edit_text("Select a subcategory:", reply_markup=keyboard.adjust(2).as_markup())
+        keyboard.add(InlineKeyboardButton(text="◀️ Назад", callback_data="shop_back"))
+        keyboard.add(InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main"))
+        await callback.message.edit_text("Оберіть підкатегорію:", reply_markup=keyboard.adjust(2).as_markup())
     else:
         items = list(await rq.get_categories_item(cat_id))
         keyboard = InlineKeyboardBuilder()
         for item_obj in items:
             keyboard.add(InlineKeyboardButton(text=f"🛒 {item_obj.name} — {item_obj.price}", callback_data=f"add_cart_{item_obj.id}"))
-        keyboard.add(InlineKeyboardButton(text="🛒 View Cart", callback_data="view_cart"))
-        keyboard.add(InlineKeyboardButton(text="◀️ Back", callback_data="shop_back"))
-        await callback.message.edit_text("Select item to add to cart:", reply_markup=keyboard.adjust(1).as_markup())
+        keyboard.add(InlineKeyboardButton(text="🛒 Кошик", callback_data="view_cart"))
+        keyboard.add(InlineKeyboardButton(text="◀️ Назад", callback_data="shop_back"))
+        await callback.message.edit_text("Оберіть товар для додавання в кошик:", reply_markup=keyboard.adjust(1).as_markup())
     await callback.answer()
 
 
@@ -842,7 +842,7 @@ async def add_to_cart(callback: CallbackQuery):
             "qty": 1
         })
 
-    await callback.answer(f"Added {item_data.name} to cart")
+    await callback.answer(f"{item_data.name} додано в кошик")
 
 
 @router.callback_query(F.data == "view_cart")
@@ -851,21 +851,21 @@ async def view_cart(callback: CallbackQuery):
     cart = user_carts.get(user_id, [])
 
     if not cart:
-        await callback.answer("Cart is empty")
-        await callback.message.edit_text("🛒 Your cart is empty", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="🛍 Go to Shop", callback_data="btn_shop")],
-            [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+        await callback.answer("Кошик порожній")
+        await callback.message.edit_text("🛒 Ваш кошик порожній", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="🛍 До магазину", callback_data="btn_shop")],
+            [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
         ]))
         return
 
-    text = "🛒 Your cart:\n\n"
+    text = "🛒 Ваш кошик:\n\n"
     for item_obj in cart:
         text += f"• {item_obj['name']} x{item_obj['qty']} — {item_obj['price']}\n"
 
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="✅ Checkout", callback_data="checkout_cart")],
-        [InlineKeyboardButton(text="🗑 Clear Cart", callback_data="clear_cart")],
-        [InlineKeyboardButton(text="◀️ Back to Shop", callback_data="shop_back")],
+        [InlineKeyboardButton(text="✅ Оформити замовлення", callback_data="checkout_cart")],
+        [InlineKeyboardButton(text="🗑 Очистити кошик", callback_data="clear_cart")],
+        [InlineKeyboardButton(text="◀️ Назад до магазину", callback_data="shop_back")],
     ])
     await callback.message.edit_text(text, reply_markup=keyboard)
 
@@ -873,10 +873,10 @@ async def view_cart(callback: CallbackQuery):
 @router.callback_query(F.data == "clear_cart")
 async def clear_cart_handler(callback: CallbackQuery):
     user_carts.pop(callback.from_user.id, None)
-    await callback.answer("Cart cleared")
-    await callback.message.edit_text("🛒 Cart is empty", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🛍 Go to Shop", callback_data="btn_shop")],
-        [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+    await callback.answer("Кошик очищено")
+    await callback.message.edit_text("🛒 Кошик порожній", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🛍 До магазину", callback_data="btn_shop")],
+        [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
     ]))
 
 
@@ -885,11 +885,11 @@ async def checkout_cart(callback: CallbackQuery, state: FSMContext):
     user_id = callback.from_user.id
     cart = user_carts.get(user_id, [])
     if not cart:
-        await callback.answer("Cart is empty")
+        await callback.answer("Кошик порожній")
         return
     await state.set_state(CartStates.checkout_name)
-    await callback.message.answer("Enter your name:", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking")]
+    await callback.message.answer("Введіть ваше ім'я:", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking")]
     ]))
 
 
@@ -898,9 +898,9 @@ async def cart_checkout_name(message: Message, state: FSMContext):
     await state.update_data(name=message.text)
     await state.set_state(CartStates.checkout_phone)
     await message.answer(
-        "Enter your phone number or press the button below:",
+        "Введіть ваш номер телефону або натисніть кнопку нижче:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="📱 Share phone number", request_contact=True)]],
+            keyboard=[[KeyboardButton(text="📱 Поділитися номером телефону", request_contact=True)]],
             resize_keyboard=True,
             one_time_keyboard=True
         )
@@ -920,8 +920,8 @@ async def cart_checkout_phone_text(message: Message, state: FSMContext):
 async def _cart_checkout_address(message: Message, state: FSMContext, phone: str):
     await state.update_data(phone=phone)
     await state.set_state(CartStates.checkout_address)
-    await message.answer("Enter delivery address or comment:", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_booking")]
+    await message.answer("Введіть адресу доставки або коментар:", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_booking")]
     ]))
 
 
@@ -938,17 +938,17 @@ async def cart_checkout_address(message: Message, state: FSMContext):
         username=message.from_user.username,
         name=data['name'],
         phone=data['phone'],
-        master="Online Shop",
+        master="Інтернет-магазин",
         service=f"Order:\n{cart_text}",
-        date="N/A",
-        time="N/A"
+        date="Н/Д",
+        time="Н/Д"
     )
 
     for admin_id in ADMIN_IDS:
         try:
             await message.bot.send_message(
                 chat_id=admin_id,
-                text=f"🛒 New shop order!\n\n"
+                text=f"🛒 Нове замовлення з магазину!\n\n"
                      f"👤 {data['name']}\n"
                      f"📱 {data['phone']}\n"
                      f"📦\n{cart_text}\n"
@@ -958,14 +958,14 @@ async def cart_checkout_address(message: Message, state: FSMContext):
             pass
 
     await message.answer(
-        "✅ Order placed!\n\n"
+        "✅ Замовлення оформлено!\n\n"
         f"👤 {data['name']}\n"
         f"📱 {data['phone']}\n"
         f"📦\n{cart_text}\n"
         f"📍 {message.text}\n\n"
-        "Thank you for your order! 🛒",
+        "Дякуємо за замовлення! 🛒",
         reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="🏠 Main Menu", callback_data="to_main")]
+            [InlineKeyboardButton(text="🏠 Головне меню", callback_data="to_main")]
         ])
     )
     user_carts.pop(message.from_user.id, None)
@@ -976,33 +976,33 @@ async def cart_checkout_address(message: Message, state: FSMContext):
 @router.message(Command("admin"))
 async def admin_panel(message: Message):
     if message.from_user.id not in ADMIN_IDS:
-        await message.answer("❌ Access denied")
+        await message.answer("❌ Доступ заборонено")
         return
-    await message.answer("👑 Admin Panel", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📋 All bookings", callback_data="admin_appointments")],
-        [InlineKeyboardButton(text="💰 Change price", callback_data="admin_price")],
-        [InlineKeyboardButton(text="➕ Add service", callback_data="admin_add")],
-        [InlineKeyboardButton(text="🗑 Delete service", callback_data="admin_delete_item")],
-        [InlineKeyboardButton(text="🔄 Sync to Sheets", callback_data="admin_sync_sheets")],
+    await message.answer("👑 Адмін-панель", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📋 Усі записи", callback_data="admin_appointments")],
+        [InlineKeyboardButton(text="💰 Змінити ціну", callback_data="admin_price")],
+        [InlineKeyboardButton(text="➕ Додати послугу", callback_data="admin_add")],
+        [InlineKeyboardButton(text="🗑 Видалити послугу", callback_data="admin_delete_item")],
+        [InlineKeyboardButton(text="🔄 Синхронізувати з Sheets", callback_data="admin_sync_sheets")],
     ]))
 
 
 @router.callback_query(F.data == "back_admin")
 async def back_admin(callback: CallbackQuery):
-    await callback.message.edit_text("👑 Admin Panel", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📋 All bookings", callback_data="admin_appointments")],
-        [InlineKeyboardButton(text="💰 Change price", callback_data="admin_price")],
-        [InlineKeyboardButton(text="➕ Add service", callback_data="admin_add")],
-        [InlineKeyboardButton(text="🗑 Delete service", callback_data="admin_delete_item")],
-        [InlineKeyboardButton(text="🔄 Sync to Sheets", callback_data="admin_sync_sheets")],
+    await callback.message.edit_text("👑 Адмін-панель", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📋 Усі записи", callback_data="admin_appointments")],
+        [InlineKeyboardButton(text="💰 Змінити ціну", callback_data="admin_price")],
+        [InlineKeyboardButton(text="➕ Додати послугу", callback_data="admin_add")],
+        [InlineKeyboardButton(text="🗑 Видалити послугу", callback_data="admin_delete_item")],
+        [InlineKeyboardButton(text="🔄 Синхронізувати з Sheets", callback_data="admin_sync_sheets")],
     ]))
 
 
 @router.callback_query(F.data == "cancel_fsm")
 async def cancel_fsm(callback: CallbackQuery, state: FSMContext):
     await state.clear()
-    await callback.message.edit_text("❌ Cancelled", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="◀️ Back", callback_data="back_admin")]
+    await callback.message.edit_text("❌ Скасовано", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="◀️ Назад", callback_data="back_admin")]
     ]))
 
 
@@ -1015,20 +1015,20 @@ async def admin_appointments(callback: CallbackQuery):
 
     appointments = await rq.get_all_appointments()
     if not appointments:
-        await callback.message.edit_text("📋 No bookings yet", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="◀️ Back", callback_data="back_admin")]
+        await callback.message.edit_text("📋 Записів ще немає", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="◀️ Назад", callback_data="back_admin")]
         ]))
         return
-    await callback.message.edit_text("📋 All bookings:")
+    await callback.message.edit_text("📋 Усі записи:")
     for a in appointments:
         text = (f"👤 {a.name} | 📱 {a.phone}\n"
                 f"💇 {a.master} | ✂️ {a.service}\n"
-                f"📅 {a.date} at {a.time}")
+                f"📅 {a.date} о {a.time}")
         await callback.message.answer(text, reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="❌ Delete", callback_data=f"del_appointment_{a.id}")]
+            [InlineKeyboardButton(text="❌ Видалити", callback_data=f"del_appointment_{a.id}")]
         ]))
-    await callback.message.answer("👆 End of list", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="◀️ Back", callback_data="back_admin")]
+    await callback.message.answer("👆 Кінець списку", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="◀️ Назад", callback_data="back_admin")]
     ]))
 
 
@@ -1039,30 +1039,61 @@ async def del_appointment(callback: CallbackQuery):
     appointment_id = int(callback.data.split("_")[2])
     await rq.delete_appointment(appointment_id)
     await callback.message.delete()
-    await callback.answer("✅ Deleted")
+    await callback.answer("✅ Видалено")
 
 
 # ---- Sync to Google Sheets ----
 
+import asyncio
+import logging
+
+log = logging.getLogger(__name__)
+_sync_lock = asyncio.Lock()
+
+BACK_KB = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text="◀️ Back", callback_data="back_admin")]
+])
+
+
 @router.callback_query(F.data == "admin_sync_sheets")
+async def admin_sync_ask(callback: CallbackQuery):
+    if callback.from_user.id not in ADMIN_IDS:
+        await callback.answer()
+        return
+    await callback.message.edit_text(
+        "⚠️ Таблицю буде повністю перезаписано даними з бази. "
+        "Усе, що додавали в таблиці вручну, зникне. Продовжити?",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="✅ Так, синхронізувати",
+                                  callback_data="admin_sync_sheets_confirm")],
+            [InlineKeyboardButton(text="◀️ Back", callback_data="back_admin")],
+        ]),
+    )
+    await callback.answer()
+
+
+@router.callback_query(F.data == "admin_sync_sheets_confirm")
 async def admin_sync_sheets(callback: CallbackQuery):
     if callback.from_user.id not in ADMIN_IDS:
+        await callback.answer()
         return
-    try:
-        count = await sync_all_appointments(rq.get_all_appointments)
-        await callback.message.edit_text(
-            f"✅ Synced {count} bookings to Google Sheets",
-            reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="◀️ Back", callback_data="back_admin")]
-            ])
-        )
-    except Exception as e:
-        await callback.message.edit_text(
-            f"❌ Sync error: {e}",
-            reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="◀️ Back", callback_data="back_admin")]
-            ])
-        )
+    if _sync_lock.locked():
+        await callback.answer("Синхронізація вже виконується", show_alert=True)
+        return
+
+    await callback.answer()
+    async with _sync_lock:
+        try:
+            await callback.message.edit_text("⏳ Синхронізую...")
+            count = await sync_all_appointments(rq.get_all_appointments, SHEET_ID)
+            await callback.message.edit_text(
+                f"✅ Synced {count} bookings to Google Sheets", reply_markup=BACK_KB
+            )
+        except Exception:
+            log.exception("Sheets sync failed")
+            await callback.message.edit_text(
+                "❌ Помилка синхронізації. Деталі в логах.", reply_markup=BACK_KB
+            )
 
 
 # ---- Prices ----
@@ -1075,8 +1106,8 @@ async def admin_price(callback: CallbackQuery):
     keyboard = InlineKeyboardBuilder()
     for item_obj in items:
         keyboard.add(InlineKeyboardButton(text=f"{item_obj.name} — {item_obj.price}", callback_data=f"price_item_{item_obj.id}"))
-    keyboard.add(InlineKeyboardButton(text="◀️ Back", callback_data="back_admin"))
-    await callback.message.edit_text("Select a service to change price:", reply_markup=keyboard.adjust(1).as_markup())
+    keyboard.add(InlineKeyboardButton(text="◀️ Назад", callback_data="back_admin"))
+    await callback.message.edit_text("Оберіть послугу для зміни ціни:", reply_markup=keyboard.adjust(1).as_markup())
 
 
 @router.callback_query(F.data.startswith("price_item_"))
@@ -1084,7 +1115,7 @@ async def price_choose_item(callback: CallbackQuery, state: FSMContext):
     item_id = int(callback.data.split("_")[2])
     await state.update_data(item_id=item_id)
     await state.set_state(AdminStates.change_price_value)
-    await callback.message.edit_text("Enter new price:")
+    await callback.message.edit_text("Введіть нову ціну:")
 
 
 @router.message(AdminStates.change_price_value, F.text)
@@ -1092,8 +1123,8 @@ async def price_set_value(message: Message, state: FSMContext):
     data = await state.get_data()
     await rq.update_item_price(data["item_id"], message.text)
     await state.clear()
-    await message.answer("✅ Price updated", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="◀️ Back", callback_data="back_admin")]
+    await message.answer("✅ Ціну оновлено", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="◀️ Назад", callback_data="back_admin")]
     ]))
 
 
@@ -1104,8 +1135,8 @@ async def admin_add(callback: CallbackQuery, state: FSMContext):
     if callback.from_user.id not in ADMIN_IDS:
         return
     await state.set_state(AdminStates.add_name)
-    await callback.message.answer("Enter service name:", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_fsm")]
+    await callback.message.answer("Введіть назву послуги:", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_fsm")]
     ]))
 
 
@@ -1113,14 +1144,14 @@ async def admin_add(callback: CallbackQuery, state: FSMContext):
 async def add_item_name(message: Message, state: FSMContext):
     await state.update_data(name=message.text)
     await state.set_state(AdminStates.add_desc)
-    await message.answer("Enter description:")
+    await message.answer("Введіть опис:")
 
 
 @router.message(AdminStates.add_desc, F.text)
 async def add_item_desc(message: Message, state: FSMContext):
     await state.update_data(desc=message.text)
     await state.set_state(AdminStates.add_price)
-    await message.answer("Enter price:")
+    await message.answer("Введіть ціну:")
 
 
 @router.message(AdminStates.add_price, F.text)
@@ -1131,8 +1162,8 @@ async def add_item_price(message: Message, state: FSMContext):
     keyboard = InlineKeyboardBuilder()
     for cat in cats:
         keyboard.add(InlineKeyboardButton(text=cat.name, callback_data=f"addcat_{cat.id}"))
-    keyboard.add(InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_fsm"))
-    await message.answer("Select a category:", reply_markup=keyboard.adjust(2).as_markup())
+    keyboard.add(InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_fsm"))
+    await message.answer("Оберіть категорію:", reply_markup=keyboard.adjust(2).as_markup())
 
 
 @router.callback_query(F.data.startswith("addcat_"), AdminStates.add_category)
@@ -1143,14 +1174,14 @@ async def add_item_category(callback: CallbackQuery, state: FSMContext):
         keyboard = InlineKeyboardBuilder()
         for sub in subs:
             keyboard.add(InlineKeyboardButton(text=sub.name, callback_data=f"addcat_{sub.id}"))
-        keyboard.add(InlineKeyboardButton(text="❌ Cancel", callback_data="cancel_fsm"))
-        await callback.message.edit_text("Select a subcategory:", reply_markup=keyboard.adjust(2).as_markup())
+        keyboard.add(InlineKeyboardButton(text="❌ Скасувати", callback_data="cancel_fsm"))
+        await callback.message.edit_text("Оберіть підкатегорію:", reply_markup=keyboard.adjust(2).as_markup())
     else:
         data = await state.get_data()
         await rq.add_item(data["name"], data["desc"], data["price"], cat_id)
         await state.clear()
-        await callback.message.edit_text("✅ Service added", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="◀️ Back", callback_data="back_admin")]
+        await callback.message.edit_text("✅ Послугу додано", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="◀️ Назад", callback_data="back_admin")]
         ]))
 
 
@@ -1163,8 +1194,8 @@ async def admin_delete_item(callback: CallbackQuery):
     keyboard = InlineKeyboardBuilder()
     for item_obj in items:
         keyboard.add(InlineKeyboardButton(text=item_obj.name, callback_data=f"delete_item_{item_obj.id}"))
-    keyboard.add(InlineKeyboardButton(text="◀️ Back", callback_data="back_admin"))
-    await callback.message.edit_text("Select a service to delete:", reply_markup=keyboard.adjust(1).as_markup())
+    keyboard.add(InlineKeyboardButton(text="◀️ Назад", callback_data="back_admin"))
+    await callback.message.edit_text("Оберіть послугу для видалення:", reply_markup=keyboard.adjust(1).as_markup())
 
 
 @router.callback_query(F.data.startswith("delete_item_"))
@@ -1173,6 +1204,6 @@ async def confirm_delete_item(callback: CallbackQuery):
         return
     item_id = int(callback.data.split("_")[2])
     await rq.delete_item(item_id)
-    await callback.message.edit_text("✅ Service deleted", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="◀️ Back", callback_data="back_admin")]
+    await callback.message.edit_text("✅ Послугу видалено", reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="◀️ Назад", callback_data="back_admin")]
     ]))

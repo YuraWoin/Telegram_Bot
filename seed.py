@@ -89,36 +89,36 @@ async def seed():
 
 CATEGORIES = [
     # ===== BEAUTY SALON & BARBERSHOP =====
-    ("Beauty Services", None),
-    ("Hair", "Beauty Services"),
-    ("Nails", "Beauty Services"),
-    ("Makeup", "Beauty Services"),
-    ("Brows", "Beauty Services"),
-    ("Barber", "Beauty Services"),
+    ("Б'юті-послуги", None),
+    ("Волосся", "Б'юті-послуги"),
+    ("Нігті", "Б'юті-послуги"),
+    ("Макіяж", "Б'юті-послуги"),
+    ("Брови", "Б'юті-послуги"),
+    ("Барбер", "Б'юті-послуги"),
 
     # ===== STO (AUTO SERVICE) =====
-    ("STO Services", None),
-    ("Diagnostics", "STO Services"),
-    ("Oil Change", "STO Services"),
-    ("Engine Repair", "STO Services"),
-    ("Suspension", "STO Services"),
-    ("Tires", "STO Services"),
-    ("Electrics", "STO Services"),
+    ("СТО-послуги", None),
+    ("Діагностика", "СТО-послуги"),
+    ("Заміна оливи", "СТО-послуги"),
+    ("Ремонт двигуна", "СТО-послуги"),
+    ("Підвіска", "СТО-послуги"),
+    ("Шини", "СТО-послуги"),
+    ("Електрика", "СТО-послуги"),
 
     # ===== CAFE =====
-    ("Food Menu", None),
-    ("Breakfast", "Food Menu"),
-    ("Lunch", "Food Menu"),
-    ("Dinner", "Food Menu"),
-    ("Drinks", "Food Menu"),
-    ("Desserts", "Food Menu"),
+    ("Меню їжі", None),
+    ("Сніданки", "Меню їжі"),
+    ("Обіди", "Меню їжі"),
+    ("Вечері", "Меню їжі"),
+    ("Напої", "Меню їжі"),
+    ("Десерти", "Меню їжі"),
 
     # ===== SHOP =====
-    ("Shop Products", None),
-    ("Electronics", "Shop Products"),
-    ("Clothing", "Shop Products"),
-    ("Home & Garden", "Shop Products"),
-    ("Sports", "Shop Products"),
+    ("Товари магазину", None),
+    ("Електроніка", "Товари магазину"),
+    ("Одяг", "Товари магазину"),
+    ("Дім і сад", "Товари магазину"),
+    ("Спорт", "Товари магазину"),
 ]
 
 
@@ -128,146 +128,146 @@ CATEGORIES = [
 
 ITEMS = {
     # ---------- BEAUTY SALON ----------
-    "Hair": [
-        ("Womens Haircut", "Professional womens haircut with styling", "30-50 USD"),
-        ("Mens Haircut", "Mens haircut with clipper and scissors", "20-35 USD"),
-        ("Hair Coloring", "Full hair coloring with premium dye", "50-120 USD"),
-        ("Balayage", "Hand-painted balayage technique", "80-150 USD"),
-        ("Keratin Treatment", "Smoothing keratin treatment", "100-200 USD"),
-        ("Hair Botox", "Deep restoration hair botox", "80-150 USD"),
-        ("Hair Styling", "Event styling and updo", "40-80 USD"),
+    "Волосся": [
+        ("Жіноча стрижка", "Професійна жіноча стрижка з укладкою", "30-50 USD"),
+        ("Чоловіча стрижка", "Чоловіча стрижка машинкою та ножицями", "20-35 USD"),
+        ("Фарбування волосся", "Повне фарбування волосся преміальною фарбою", "50-120 USD"),
+        ("Балаяж", "Техніка ручного балаяжу", "80-150 USD"),
+        ("Кератинове випрямлення", "Кератинове випрямлення волосся", "100-200 USD"),
+        ("Ботокс для волосся", "Глибоке відновлення волосся ботоксом", "80-150 USD"),
+        ("Укладка волосся", "Святкова укладка та зачіска", "40-80 USD"),
     ],
-    "Nails": [
-        ("Classic Manicure", "Trim, shape, cuticle care, polish", "15 USD"),
-        ("Gel Polish", "Gel polish with prep", "25 USD"),
-        ("Nail Extensions", "Acrylic or gel extensions", "40 USD"),
-        ("Pedicure", "Classic pedicure with scrub", "30 USD"),
-        ("Nail Art", "Custom nail art design", "10-30 USD"),
+    "Нігті": [
+        ("Класичний манікюр", "Підрізання, форма, догляд за кутикулою, покриття", "15 USD"),
+        ("Гель-лак", "Гель-лак з підготовкою", "25 USD"),
+        ("Нарощування нігтів", "Нарощування акрилом або гелем", "40 USD"),
+        ("Педикюр", "Класичний педикюр зі скрабом", "30 USD"),
+        ("Дизайн нігтів", "Індивідуальний дизайн нігтів", "10-30 USD"),
     ],
-    "Makeup": [
-        ("Day Makeup", "Natural day makeup", "40 USD"),
-        ("Evening Makeup", "Evening / event makeup", "60 USD"),
-        ("Wedding Makeup", "Bridal makeup with trial", "120 USD"),
-        ("Makeup Lesson", "1-on-1 makeup lesson", "80 USD"),
+    "Макіяж": [
+        ("Денний макіяж", "Природний денний макіяж", "40 USD"),
+        ("Вечірній макіяж", "Вечірній макіяж / макіяж на подію", "60 USD"),
+        ("Весільний макіяж", "Весільний макіяж з репетицією", "120 USD"),
+        ("Урок макіяжу", "Індивідуальний урок макіяжу", "80 USD"),
     ],
-    "Brows": [
-        ("Brow Shaping", "Wax or thread brow shaping", "12 USD"),
-        ("Brow Tinting", "Henna or dye brow tinting", "18 USD"),
-        ("Brow Lamination", "Brow lamination treatment", "30 USD"),
-        ("Brow Combo", "Shaping + tinting + lamination", "50 USD"),
+    "Брови": [
+        ("Корекція брів", "Корекція брів воском або ниткою", "12 USD"),
+        ("Фарбування брів", "Фарбування брів хною або фарбою", "18 USD"),
+        ("Ламінування брів", "Процедура ламінування брів", "30 USD"),
+        ("Комбо для брів", "Корекція + фарбування + ламінування", "50 USD"),
     ],
-    "Barber": [
-        ("Mens Haircut", "Classic mens haircut", "18 USD"),
-        ("Beard Trim", "Beard shaping and trim", "12 USD"),
-        ("Hot Towel Shave", "Traditional hot towel shave", "20 USD"),
-        ("Hair Tattoo", "Creative hair tattoo design", "25 USD"),
-        ("Beard Coloring", "Beard and mustache coloring", "15 USD"),
+    "Барбер": [
+        ("Чоловіча стрижка", "Класична чоловіча стрижка", "18 USD"),
+        ("Стрижка бороди", "Моделювання та стрижка бороди", "12 USD"),
+        ("Гоління гарячим рушником", "Традиційне гоління гарячим рушником", "20 USD"),
+        ("Татуювання на волоссі", "Креативне татуювання на волоссі", "25 USD"),
+        ("Фарбування бороди", "Фарбування бороди та вусів", "15 USD"),
     ],
 
     # ---------- STO ----------
-    "Diagnostics": [
-        ("Computer Diagnostics", "Full ECU scan and error reading", "30 USD"),
-        ("Electrical Diagnostics", "Wiring and sensor check", "25 USD"),
-        ("Suspension Check", "Full suspension inspection", "20 USD"),
-        ("Pre-Purchase Inspection", "Complete car condition report", "50 USD"),
+    "Діагностика": [
+        ("Комп'ютерна діагностика", "Повне сканування ЕБУ та зчитування помилок", "30 USD"),
+        ("Електрична діагностика", "Перевірка проводки та датчиків", "25 USD"),
+        ("Перевірка підвіски", "Повна перевірка підвіски", "20 USD"),
+        ("Перевірка перед покупкою", "Повний звіт про стан авто", "50 USD"),
     ],
-    "Oil Change": [
-        ("Engine Oil Change", "Oil + OEM filter replacement", "40 USD"),
-        ("Transmission Oil Change", "ATF or CVT fluid change", "60 USD"),
-        ("Filter Replacement", "Air, cabin, fuel filters", "15-30 USD"),
-        ("Full Fluid Service", "All fluids top-up and check", "80 USD"),
+    "Заміна оливи": [
+        ("Заміна моторної оливи", "Заміна оливи + оригінального фільтра", "40 USD"),
+        ("Заміна оливи в КПП", "Заміна рідини ATF або CVT", "60 USD"),
+        ("Заміна фільтрів", "Повітряний, салонний, паливний фільтри", "15-30 USD"),
+        ("Повне обслуговування рідин", "Доливання та перевірка всіх рідин", "80 USD"),
     ],
-    "Engine Repair": [
-        ("Timing Belt Replacement", "Belt + tensioner + water pump", "200-400 USD"),
-        ("Gasket Replacement", "Head gasket or valve cover", "150-300 USD"),
-        ("Engine Overhaul", "Full engine rebuild", "1000-3000 USD"),
-        ("Turbo Repair", "Turbocharger diagnostics and repair", "300-800 USD"),
+    "Ремонт двигуна": [
+        ("Заміна ременя ГРМ", "Ремінь + натягувач + помпа", "200-400 USD"),
+        ("Заміна прокладок", "Прокладка ГБЦ або клапанної кришки", "150-300 USD"),
+        ("Капітальний ремонт двигуна", "Повне перебирання двигуна", "1000-3000 USD"),
+        ("Ремонт турбіни", "Діагностика та ремонт турбокомпресора", "300-800 USD"),
     ],
-    "Suspension": [
-        ("Shock Absorber Replacement", "Front or rear shocks", "80-150 USD"),
-        ("Spring Replacement", "Coil spring replacement", "60-100 USD"),
-        ("Wheel Alignment", "3D alignment and camber adjustment", "30 USD"),
-        ("Control Arm Replacement", "Wishbone / control arm", "50-100 USD"),
+    "Підвіска": [
+        ("Заміна амортизаторів", "Передні або задні амортизатори", "80-150 USD"),
+        ("Заміна пружин", "Заміна витих пружин", "60-100 USD"),
+        ("Розвал-сходження", "3D-регулювання розвалу та сходження", "30 USD"),
+        ("Заміна важелів", "Важіль / поперечний важіль", "50-100 USD"),
     ],
-    "Tires": [
-        ("Tire Mounting", "Mount and balance 4 tires", "40 USD"),
-        ("Wheel Balancing", "Per wheel balancing", "8 USD"),
-        ("Tire Repair", "Puncture repair with patch", "15 USD"),
-        ("Seasonal Swap", "Summer / winter tire swap", "30 USD"),
+    "Шини": [
+        ("Монтаж шин", "Монтаж і балансування 4 шин", "40 USD"),
+        ("Балансування коліс", "Балансування за кожне колесо", "8 USD"),
+        ("Ремонт шин", "Ремонт проколу латкою", "15 USD"),
+        ("Сезонна заміна шин", "Заміна літніх / зимових шин", "30 USD"),
     ],
-    "Electrics": [
-        ("Battery Replacement", "Battery test and replacement", "50-150 USD"),
-        ("Alternator Repair", "Alternator rebuild or replace", "100-250 USD"),
-        ("Wiring Repair", "Short circuit or harness repair", "40-100 USD"),
-        ("Starter Repair", "Starter motor diagnostics", "80-200 USD"),
+    "Електрика": [
+        ("Заміна акумулятора", "Перевірка та заміна акумулятора", "50-150 USD"),
+        ("Ремонт генератора", "Перебирання або заміна генератора", "100-250 USD"),
+        ("Ремонт проводки", "Ремонт короткого замикання або джгута", "40-100 USD"),
+        ("Ремонт стартера", "Діагностика стартера", "80-200 USD"),
     ],
 
     # ---------- CAFE ----------
-    "Breakfast": [
-        ("Scrambled Eggs & Toast", "Fluffy eggs with butter toast", "8 USD"),
-        ("Pancakes with Syrup", "3 stack with maple syrup", "9 USD"),
-        ("Oatmeal Bowl", "With berries and honey", "7 USD"),
-        ("Croissant & Coffee", "Butter croissant + espresso", "6 USD"),
-        ("English Breakfast", "Eggs, bacon, beans, toast", "12 USD"),
+    "Сніданки": [
+        ("Яєчня з тостами", "Пишна яєчня з масляними тостами", "8 USD"),
+        ("Млинці з сиропом", "3 млинці з кленовим сиропом", "9 USD"),
+        ("Вівсяна каша", "З ягодами та медом", "7 USD"),
+        ("Круасан і кава", "Масляний круасан + еспресо", "6 USD"),
+        ("Англійський сніданок", "Яйця, бекон, квасоля, тости", "12 USD"),
     ],
-    "Lunch": [
-        ("Soup of the Day", "Chef's seasonal soup", "6 USD"),
-        ("Caesar Salad", "Chicken, parmesan, croutons", "10 USD"),
-        ("Classic Burger", "Beef patty, cheese, fries", "12 USD"),
-        ("Pasta Carbonara", "Creamy bacon pasta", "11 USD"),
-        ("Chicken Wrap", "Grilled chicken with veggies", "9 USD"),
+    "Обіди": [
+        ("Суп дня", "Сезонний суп від шефа", "6 USD"),
+        ("Салат Цезар", "Курка, пармезан, грінки", "10 USD"),
+        ("Класичний бургер", "Яловича котлета, сир, картопля фрі", "12 USD"),
+        ("Паста карбонара", "Паста з вершковим соусом і беконом", "11 USD"),
+        ("Рол з куркою", "Курка гриль з овочами", "9 USD"),
     ],
-    "Dinner": [
-        ("Ribeye Steak", "300g with grilled vegetables", "25 USD"),
-        ("Grilled Salmon", "With asparagus and lemon", "22 USD"),
-        ("Mushroom Risotto", "Creamy arborio rice", "16 USD"),
-        ("Chicken Wings", "BBQ or spicy, 10 pcs", "14 USD"),
-        ("Pizza Margherita", "Classic tomato and mozzarella", "13 USD"),
+    "Вечері": [
+        ("Стейк рібай", "300 г з овочами гриль", "25 USD"),
+        ("Лосось гриль", "Зі спаржею та лимоном", "22 USD"),
+        ("Грибне різото", "Вершковий рис арборіо", "16 USD"),
+        ("Крила курки", "BBQ або гострі, 10 шт", "14 USD"),
+        ("Піца Маргарита", "Класична з томатами та моцарелою", "13 USD"),
     ],
-    "Drinks": [
-        ("Espresso", "Double shot", "3 USD"),
-        ("Cappuccino", "With latte art", "4 USD"),
-        ("Latte", "Vanilla or caramel", "4.5 USD"),
-        ("Fresh Orange Juice", "Squeezed on spot", "5 USD"),
-        ("Berry Smoothie", "Strawberry, blueberry, banana", "6 USD"),
-        ("Lemonade", "Mint and lime", "4 USD"),
+    "Напої": [
+        ("Еспресо", "Подвійна порція", "3 USD"),
+        ("Капучино", "З латте-артом", "4 USD"),
+        ("Лате", "Ванільний або карамельний", "4.5 USD"),
+        ("Свіжий апельсиновий сік", "Свіжовичавлений на місці", "5 USD"),
+        ("Ягідний смузі", "Полуниця, чорниця, банан", "6 USD"),
+        ("Лимонад", "М'ята та лайм", "4 USD"),
     ],
-    "Desserts": [
-        ("Cheesecake", "New York style", "7 USD"),
-        ("Tiramisu", "Classic Italian", "8 USD"),
-        ("Ice Cream Scoop", "3 flavors to choose", "4 USD"),
-        ("Chocolate Lava Cake", "With vanilla ice cream", "9 USD"),
-        ("Apple Pie", "With cinnamon", "6 USD"),
+    "Десерти": [
+        ("Чізкейк", "У стилі Нью-Йорк", "7 USD"),
+        ("Тірамісу", "Класичний італійський", "8 USD"),
+        ("Морозиво (кулька)", "3 смаки на вибір", "4 USD"),
+        ("Шоколадний фондан", "З ванільним морозивом", "9 USD"),
+        ("Яблучний пиріг", "З корицею", "6 USD"),
     ],
 
     # ---------- SHOP ----------
-    "Electronics": [
-        ("Smartphone X1", "6.1 inch OLED, 128GB", "699 USD"),
-        ("Laptop Pro 14", "M3 chip, 16GB RAM", "1299 USD"),
-        ("Wireless Headphones", "ANC, 30h battery", "199 USD"),
-        ("Power Bank 20000mAh", "Fast charge 65W", "45 USD"),
-        ("Smart Watch", "GPS, heart rate monitor", "299 USD"),
+    "Електроніка": [
+        ("Смартфон X1", "6.1 дюйма OLED, 128 ГБ", "699 USD"),
+        ("Ноутбук Pro 14", "Чип M3, 16 ГБ RAM", "1299 USD"),
+        ("Бездротові навушники", "ANC, акумулятор 30 год", "199 USD"),
+        ("Повербанк 20000mAh", "Швидка зарядка 65 Вт", "45 USD"),
+        ("Смарт-годинник", "GPS, пульсометр", "299 USD"),
     ],
-    "Clothing": [
-        ("Cotton T-Shirt", "Premium organic cotton", "25 USD"),
-        ("Slim Fit Jeans", "Stretch denim", "55 USD"),
-        ("Bomber Jacket", "Water resistant", "89 USD"),
-        ("Running Sneakers", "Breathable mesh", "79 USD"),
-        ("Hoodie", "Fleece lined", "45 USD"),
+    "Одяг": [
+        ("Бавовняна футболка", "Преміальна органічна бавовна", "25 USD"),
+        ("Джинси Slim Fit", "Стрейчовий денім", "55 USD"),
+        ("Куртка-бомбер", "Водостійка", "89 USD"),
+        ("Кросівки для бігу", "Дихаюча сітка", "79 USD"),
+        ("Худі", "З флісовою підкладкою", "45 USD"),
     ],
-    "Home & Garden": [
-        ("LED Desk Lamp", "Dimmable, USB-C", "35 USD"),
-        ("Ergonomic Chair", "Mesh back, lumbar support", "199 USD"),
-        ("Ceramic Plant Pot", "Set of 3", "29 USD"),
-        ("Tool Set 45pcs", "Chrome vanadium", "49 USD"),
-        ("Smart Bulb Kit", "RGB, app controlled", "39 USD"),
+    "Дім і сад": [
+        ("LED настільна лампа", "З регулюванням яскравості, USB-C", "35 USD"),
+        ("Ергономічне крісло", "Сітчаста спинка, поперекова підтримка", "199 USD"),
+        ("Керамічний горщик", "Набір з 3 шт", "29 USD"),
+        ("Набір інструментів 45 шт", "Хром-ванадій", "49 USD"),
+        ("Розумна лампа", "RGB, керування через застосунок", "39 USD"),
     ],
-    "Sports": [
-        ("Adjustable Dumbbells", "2x 20kg", "149 USD"),
-        ("Yoga Mat", "Non-slip, 6mm", "35 USD"),
-        ("Resistance Bands Set", "5 levels + handles", "19 USD"),
-        ("Protein Powder 1kg", "Whey isolate, chocolate", "45 USD"),
-        ("Jump Rope", "Speed rope with bearings", "15 USD"),
+    "Спорт": [
+        ("Регульовані гантелі", "2x 20 кг", "149 USD"),
+        ("Килимок для йоги", "Протиковазний, 6 мм", "35 USD"),
+        ("Набір еспандерів", "5 рівнів + ручки", "19 USD"),
+        ("Протеїн 1 кг", "Сироватковий ізолят, шоколад", "45 USD"),
+        ("Скакалка", "Швидкісна з підшипниками", "15 USD"),
     ],
 }
 

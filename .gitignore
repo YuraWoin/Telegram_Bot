@@ -3,3 +3,9 @@ __pycache__/
 .venv/
 .venv
 .env
+sigma-kayak-511914-m4-5cbe459f5e45.json
+credentials.json
+
+credentials.json
+sigma-kayak-*.json
+.env

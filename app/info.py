@@ -7,13 +7,13 @@ Created: 2026
 This code is provided for viewing and personal use only.
 Do not redistribute or claim authorship. See LICENSE for terms.
 """
-infofo ='''Welcome, {message.from_user.first_name}!\nWelcome to our business chat-bot! 🌸
+infofo ='''Вітаємо, {message.from_user.first_name}!\nВітаємо у нашому бізнес-чат-боті! 🌸
 
-Here you can book appointments, order food, shop online, and view our price list.
+Тут ви можете записатися на прийом, замовити їжу, обрати товари онлайн і переглянути прайс-лист.
 
-💳 Price List: Press "Price List" to see service costs.
-📅 Booking: Press "Booking" to choose a convenient time.
-🔧 STO Booking: Car service appointments.
-🍽 Order Food: Order from our cafe menu.
-🛒 Shop: Browse products and add to cart.
-Would you like to choose a service right now?'''
+💳 Прайс-лист: Натисніть "Прайс-лист", щоб переглянути вартість послуг.
+📅 Запис: Натисніть "Запис", щоб обрати зручний час.
+🔧 Запис СТО: Запис на автосервіс.
+🍽 Замовити їжу: Замовлення з меню нашого кафе.
+🛒 Магазин: Перегляньте товари та додайте до кошика.
+Бажаєте обрати послугу прямо зараз?'''
